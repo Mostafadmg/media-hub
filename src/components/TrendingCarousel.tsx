@@ -49,7 +49,7 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
   return (
     <div
       ref={scrollRef}
-      className="flex gap-4 md:gap-6 overflow-x-hidden pb-4 scrollbar-hide"
+      className="flex gap-4 md:gap-6 overflow-x-hidden py-3 px-1 -mx-1 scrollbar-hide"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => {
         setIsPaused(false);
