@@ -82,12 +82,26 @@ export function VideoCard({ show, index = 0 }: VideoCardProps) {
                 allowFullScreen
               />
             ) : (
-              <img
-                src={show.thumbnail.regular.large}
-                alt={show.title}
-                className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-                loading="lazy"
-              />
+              <>
+                <img
+                  src={show.thumbnail.regular.large}
+                  alt={show.title}
+                  className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                  loading="lazy"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    target.style.display = "none";
+                    const fallback = target.parentElement?.querySelector(".img-fallback") as HTMLElement;
+                    if (fallback) fallback.style.display = "flex";
+                  }}
+                />
+                <div className="img-fallback hidden absolute inset-0 bg-gradient-to-br from-muted to-card items-center justify-center">
+                  <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m10 8 6 4-6 4Z"/></svg>
+                    <span className="text-xs font-medium">{show.title}</span>
+                  </div>
+                </div>
+              </>
             )}
           </div>
 

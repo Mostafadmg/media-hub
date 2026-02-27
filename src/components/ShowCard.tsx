@@ -32,7 +32,19 @@ export function ShowCard({ show, index = 0 }: ShowCardProps) {
           alt={show.title}
           className="w-full aspect-[7/5] object-cover transition-transform duration-500 ease-out group-hover:scale-110"
           loading="lazy"
+          onError={(e) => {
+            const target = e.currentTarget;
+            target.style.display = "none";
+            const fallback = target.parentElement?.querySelector(".img-fallback") as HTMLElement;
+            if (fallback) fallback.style.display = "flex";
+          }}
         />
+        <div className="img-fallback hidden absolute inset-0 bg-gradient-to-br from-muted to-card aspect-[7/5] items-center justify-center">
+          <div className="flex flex-col items-center gap-2 text-muted-foreground">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m10 8 6 4-6 4Z"/></svg>
+            <span className="text-xs font-medium">{show.title}</span>
+          </div>
+        </div>
         {/* Hover overlay */}
         <div className="absolute inset-0 bg-background/50 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
           <div className="flex items-center gap-2 bg-foreground/25 backdrop-blur-sm rounded-full px-4 py-2 md:px-6 md:py-3 scale-75 group-hover:scale-100 transition-transform duration-300 ease-out">
