@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { shows } from "@/data/shows";
 import { SearchBar } from "@/components/SearchBar";
-import { TrendingCard } from "@/components/TrendingCard";
+import { TrendingCarousel } from "@/components/TrendingCarousel";
 import { ShowGrid } from "@/components/ShowGrid";
 
 const Index = () => {
@@ -31,11 +31,7 @@ const Index = () => {
           {/* Trending */}
           <section className="animate-fade-in">
             <h2 className="text-xl md:text-[32px] font-light text-foreground mb-4 md:mb-6">Trending</h2>
-            <div className="flex gap-4 md:gap-10 overflow-x-auto pb-4 scrollbar-hide scroll-smooth">
-              {trending.map((show, i) => (
-                <TrendingCard key={show.id} show={show} index={i} />
-              ))}
-            </div>
+            <TrendingCarousel shows={trending} />
           </section>
 
           {/* Recommended */}
