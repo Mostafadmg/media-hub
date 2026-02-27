@@ -1,5 +1,5 @@
 import { Show } from "@/data/shows";
-import { ShowCard } from "./ShowCard";
+import { VideoCard } from "./VideoCard";
 
 interface ShowGridProps {
   shows: Show[];
@@ -18,7 +18,7 @@ export function ShowGrid({ shows, title }: ShowGridProps) {
       )}
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 xl:gap-10">
         {shows.map((show, i) => (
-          <ShowCard key={show.id} show={show} index={i} />
+          <VideoCard key={show.id} show={show} index={i} />
         ))}
       </div>
     </section>
