@@ -1,30 +1,39 @@
-import { useState, useMemo } from "react";
-import { shows } from "@/data/shows";
+import { useState } from "react";
 import { SearchBar } from "@/components/SearchBar";
 import { ShowGrid } from "@/components/ShowGrid";
+import { ShowGridSkeleton } from "@/components/Skeletons";
+import { useTopMovies, useSearch } from "@/hooks/useTMDB";
 
 const Movies = () => {
   const [search, setSearch] = useState("");
-  const movies = useMemo(() => shows.filter((s) => s.category === "Movie"), []);
+  const { data: movies, isLoading } = useTopMovies();
+  const { data: searchResults, isLoading: searchLoading } = useSearch(search);
 
-  const filtered = useMemo(() => {
-    if (!search.trim()) return movies;
-    const q = search.toLowerCase();
-    return movies.filter((s) => s.title.toLowerCase().includes(q));
-  }, [search, movies]);
+  const isSearching = search.trim().length > 0;
+  // Filter search results to movies only
+  const filteredSearch = searchResults?.filter((s) => s.category === "Movie") ?? [];
 
   return (
     <div className="space-y-6 md:space-y-10">
       <SearchBar placeholder="Search for movies" value={search} onChange={setSearch} />
-      {search.trim() ? (
-        <div>
-          <p className="text-xl md:text-[32px] font-light text-foreground mb-6">
-            Found {filtered.length} result{filtered.length !== 1 ? "s" : ""} for '{search}'
-          </p>
-          <ShowGrid shows={filtered} />
+
+      {isSearching ? (
+        <div className="animate-fade-in">
+          {searchLoading ? (
+            <ShowGridSkeleton />
+          ) : (
+            <>
+              <p className="text-xl md:text-[32px] font-light text-foreground mb-6">
+                Found {filteredSearch.length} result{filteredSearch.length !== 1 ? "s" : ""} for '{search}'
+              </p>
+              <ShowGrid shows={filteredSearch} />
+            </>
+          )}
         </div>
+      ) : isLoading ? (
+        <ShowGridSkeleton count={16} />
       ) : (
-        <ShowGrid shows={filtered} title="Movies" />
+        <ShowGrid shows={movies ?? []} title="Movies" />
       )}
     </div>
   );
