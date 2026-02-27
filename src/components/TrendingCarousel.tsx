@@ -131,8 +131,8 @@ function TrendingItem({
       <div
         className={`group relative flex-shrink-0 w-[240px] md:w-[470px] rounded-lg overflow-hidden cursor-pointer transition-all duration-500 ${
           isHovered
-            ? "ring-2 ring-primary shadow-lg shadow-primary/30 scale-105"
-            : "ring-0 ring-transparent scale-100"
+            ? "scale-105 shadow-[0_0_30px_rgba(255,255,255,0.08)] brightness-110"
+            : "scale-100 shadow-none brightness-100"
         }`}
         onMouseEnter={onHover}
         onMouseLeave={onLeave}
