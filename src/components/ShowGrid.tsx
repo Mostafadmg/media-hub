@@ -1,4 +1,4 @@
-import { Show } from "@/data/shows";
+import { Show } from "@/services/tmdb";
 import { VideoCard } from "./VideoCard";
 
 interface ShowGridProps {

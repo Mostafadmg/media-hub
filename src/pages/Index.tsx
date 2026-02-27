@@ -1,41 +1,48 @@
 import { useState, useMemo } from "react";
-import { shows } from "@/data/shows";
 import { SearchBar } from "@/components/SearchBar";
 import { TrendingCarousel } from "@/components/TrendingCarousel";
 import { ShowGrid } from "@/components/ShowGrid";
+import { ShowGridSkeleton, TrendingCarouselSkeleton } from "@/components/Skeletons";
+import { useTrending, useRecommended, useSearch } from "@/hooks/useTMDB";
 
 const Index = () => {
   const [search, setSearch] = useState("");
-  const trending = useMemo(() => shows.filter((s) => s.isTrending), []);
-  const recommended = useMemo(() => shows.filter((s) => !s.isTrending), []);
+  const { data: trending, isLoading: trendingLoading } = useTrending();
+  const { data: recommended, isLoading: recommendedLoading } = useRecommended();
+  const { data: searchResults, isLoading: searchLoading } = useSearch(search);
 
-  const filtered = useMemo(() => {
-    if (!search.trim()) return null;
-    const q = search.toLowerCase();
-    return shows.filter((s) => s.title.toLowerCase().includes(q));
-  }, [search]);
+  const isSearching = search.trim().length > 0;
 
   return (
     <div className="space-y-6 md:space-y-10">
       <SearchBar placeholder="Search for movies or TV series" value={search} onChange={setSearch} />
 
-      {filtered ? (
+      {isSearching ? (
         <div className="animate-fade-in">
-          <p className="text-xl md:text-[32px] font-light text-foreground mb-6 animate-slide-up">
-            Found {filtered.length} result{filtered.length !== 1 ? "s" : ""} for '{search}'
-          </p>
-          <ShowGrid shows={filtered} />
+          {searchLoading ? (
+            <ShowGridSkeleton count={8} />
+          ) : (
+            <>
+              <p className="text-xl md:text-[32px] font-light text-foreground mb-6 animate-slide-up">
+                Found {searchResults?.length ?? 0} result{(searchResults?.length ?? 0) !== 1 ? "s" : ""} for '{search}'
+              </p>
+              <ShowGrid shows={searchResults ?? []} />
+            </>
+          )}
         </div>
       ) : (
         <>
           {/* Trending */}
           <section className="animate-fade-in">
             <h2 className="text-xl md:text-[32px] font-light text-foreground mb-4 md:mb-6">Trending</h2>
-            <TrendingCarousel shows={trending} />
+            {trendingLoading ? <TrendingCarouselSkeleton /> : <TrendingCarousel shows={trending ?? []} />}
           </section>
 
           {/* Recommended */}
-          <ShowGrid shows={recommended} title="Recommended for you" />
+          <section className="animate-fade-in">
+            <h2 className="text-xl md:text-[32px] font-light text-foreground mb-4 md:mb-6">Recommended for you</h2>
+            {recommendedLoading ? <ShowGridSkeleton count={16} /> : <ShowGrid shows={recommended ?? []} />}
+          </section>
         </>
       )}
     </div>

@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from "react";
-import { Show } from "@/data/shows";
+import { Show } from "@/services/tmdb";
 import { useBookmarks } from "@/context/BookmarkContext";
 import { BookmarkIcon, CategoryMovie, CategoryTV } from "./icons";
 
