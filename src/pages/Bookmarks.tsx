@@ -24,8 +24,8 @@ const Bookmarks = () => {
       <SearchBar placeholder="Search for bookmarked shows" value={search} onChange={setSearch} />
 
       {filtered ? (
-        <div>
-          <p className="text-xl md:text-[32px] font-light text-foreground mb-6">
+        <div className="animate-fade-in">
+          <p className="text-xl md:text-[32px] font-light text-foreground mb-6 animate-slide-up">
             Found {filtered.length} result{filtered.length !== 1 ? "s" : ""} for '{search}'
           </p>
           <ShowGrid shows={filtered} />
@@ -35,7 +35,9 @@ const Bookmarks = () => {
           <ShowGrid shows={bookmarkedMovies} title="Bookmarked Movies" />
           <ShowGrid shows={bookmarkedSeries} title="Bookmarked TV Series" />
           {bookmarkedShows.length === 0 && (
-            <p className="text-muted-foreground text-center py-20 text-lg">No bookmarks yet. Start adding some!</p>
+            <div className="animate-fade-in text-center py-20">
+              <p className="text-muted-foreground text-lg">No bookmarks yet. Start adding some!</p>
+            </div>
           )}
         </>
       )}

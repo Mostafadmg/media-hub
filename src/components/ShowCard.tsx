@@ -2,37 +2,50 @@ import { Play } from "lucide-react";
 import { Show } from "@/data/shows";
 import { useBookmarks } from "@/context/BookmarkContext";
 import { BookmarkIcon, CategoryMovie, CategoryTV } from "./icons";
+import { useState } from "react";
 
 interface ShowCardProps {
   show: Show;
+  index?: number;
 }
 
-export function ShowCard({ show }: ShowCardProps) {
+export function ShowCard({ show, index = 0 }: ShowCardProps) {
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const bookmarked = isBookmarked(show.id);
+  const [justToggled, setJustToggled] = useState(false);
+
+  const handleBookmark = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    toggleBookmark(show.id);
+    setJustToggled(true);
+    setTimeout(() => setJustToggled(false), 300);
+  };
 
   return (
-    <div className="group">
-      <div className="relative rounded-lg overflow-hidden">
+    <div
+      className="group animate-card-appear"
+      style={{ animationDelay: `${Math.min(index * 50, 400)}ms` }}
+    >
+      <div className="relative rounded-lg overflow-hidden cursor-pointer">
         <img
           src={show.thumbnail.regular.large}
           alt={show.title}
-          className="w-full aspect-[7/5] object-cover"
+          className="w-full aspect-[7/5] object-cover transition-transform duration-500 ease-out group-hover:scale-110"
           loading="lazy"
         />
         {/* Hover overlay */}
-        <div className="absolute inset-0 bg-background/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-          <div className="flex items-center gap-2 bg-foreground/25 rounded-full px-4 py-2 md:px-6 md:py-3">
+        <div className="absolute inset-0 bg-background/50 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+          <div className="flex items-center gap-2 bg-foreground/25 backdrop-blur-sm rounded-full px-4 py-2 md:px-6 md:py-3 scale-75 group-hover:scale-100 transition-transform duration-300 ease-out">
             <Play className="w-5 h-5 md:w-7 md:h-7 text-foreground fill-foreground" />
             <span className="text-foreground text-sm md:text-lg font-medium">Play</span>
           </div>
         </div>
         {/* Bookmark button */}
         <button
-          onClick={(e) => { e.stopPropagation(); toggleBookmark(show.id); }}
-          className="absolute top-2 right-2 md:top-4 md:right-4 w-8 h-8 rounded-full bg-background/50 hover:bg-foreground flex items-center justify-center transition-colors group/bm"
+          onClick={handleBookmark}
+          className={`absolute top-2 right-2 md:top-4 md:right-4 w-8 h-8 rounded-full bg-background/50 hover:bg-foreground flex items-center justify-center transition-all duration-200 group/bm ${justToggled ? "animate-bookmark-pop" : ""}`}
         >
-          <BookmarkIcon filled={bookmarked} className="group-hover/bm:text-background" />
+          <BookmarkIcon filled={bookmarked} className="transition-colors duration-200 group-hover/bm:text-background" />
         </button>
       </div>
       {/* Info */}
@@ -47,7 +60,7 @@ export function ShowCard({ show }: ShowCardProps) {
           <span>•</span>
           <span>{show.rating}</span>
         </div>
-        <h3 className="text-sm md:text-lg font-medium text-foreground mt-1">{show.title}</h3>
+        <h3 className="text-sm md:text-lg font-medium text-foreground mt-1 transition-colors duration-200 group-hover:text-primary">{show.title}</h3>
       </div>
     </div>
   );
