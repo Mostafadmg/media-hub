@@ -20,8 +20,8 @@ const Index = () => {
       <SearchBar placeholder="Search for movies or TV series" value={search} onChange={setSearch} />
 
       {filtered ? (
-        <div>
-          <p className="text-xl md:text-[32px] font-light text-foreground mb-6">
+        <div className="animate-fade-in">
+          <p className="text-xl md:text-[32px] font-light text-foreground mb-6 animate-slide-up">
             Found {filtered.length} result{filtered.length !== 1 ? "s" : ""} for '{search}'
           </p>
           <ShowGrid shows={filtered} />
@@ -29,11 +29,11 @@ const Index = () => {
       ) : (
         <>
           {/* Trending */}
-          <section>
+          <section className="animate-fade-in">
             <h2 className="text-xl md:text-[32px] font-light text-foreground mb-4 md:mb-6">Trending</h2>
-            <div className="flex gap-4 md:gap-10 overflow-x-auto pb-4 scrollbar-hide">
-              {trending.map((show) => (
-                <TrendingCard key={show.id} show={show} />
+            <div className="flex gap-4 md:gap-10 overflow-x-auto pb-4 scrollbar-hide scroll-smooth">
+              {trending.map((show, i) => (
+                <TrendingCard key={show.id} show={show} index={i} />
               ))}
             </div>
           </section>
