@@ -112,8 +112,7 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
       {/* Cards row */}
       <div
         ref={scrollRef}
-        className="flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide scroll-smooth py-4"
-        style={{ scrollSnapType: "x mandatory" }}
+        className="flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide py-4"
       >
         {shows.map((show, i) => (
           <TrendingItem key={show.id} show={show} index={i} />
