@@ -12,13 +12,14 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
   const [isPaused, setIsPaused] = useState(false);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const animationRef = useRef<number | null>(null);
-  const scrollSpeed = 0.8;
+  const scrollSpeed = 0.5;
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
   // Duplicate items for infinite scroll effect
   const items = [...shows, ...shows, ...shows];
 
   const animate = useCallback(() => {
-    if (!scrollRef.current || isPaused) {
+    if (!scrollRef.current || isPaused || focusedIndex !== null) {
       animationRef.current = requestAnimationFrame(animate);
       return;
     }
@@ -32,7 +33,28 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
     }
 
     animationRef.current = requestAnimationFrame(animate);
-  }, [isPaused]);
+  }, [isPaused, focusedIndex]);
+
+  const handleCardClick = useCallback((index: number) => {
+    if (focusedIndex === index) {
+      // Clicking focused card again — unfocus and resume
+      setFocusedIndex(null);
+      return;
+    }
+    setFocusedIndex(index);
+
+    // Smoothly scroll the clicked card to center
+    const container = scrollRef.current;
+    if (!container) return;
+    const card = container.children[index] as HTMLElement;
+    if (!card) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+    const scrollOffset = cardRect.left - containerRect.left - (containerRect.width / 2) + (cardRect.width / 2);
+
+    container.scrollBy({ left: scrollOffset, behavior: "smooth" });
+  }, [focusedIndex]);
 
   useEffect(() => {
     // Start from the middle set
@@ -49,11 +71,12 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
   return (
     <div
       ref={scrollRef}
-      className="flex gap-4 md:gap-6 overflow-x-hidden py-3 px-1 -mx-1 scrollbar-hide"
+      className="flex gap-4 md:gap-6 overflow-x-hidden py-3 px-1 -mx-1 scrollbar-hide scroll-smooth"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => {
         setIsPaused(false);
         setHoveredId(null);
+        setFocusedIndex(null);
       }}
     >
       {items.map((show, i) => (
@@ -61,8 +84,11 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
           key={`${show.id}-${i}`}
           show={show}
           isHovered={hoveredId === `${show.id}-${i}`}
+          isFocused={focusedIndex === i}
+          isDimmed={focusedIndex !== null && focusedIndex !== i}
           onHover={() => setHoveredId(`${show.id}-${i}`)}
           onLeave={() => setHoveredId(null)}
+          onClick={() => handleCardClick(i)}
         />
       ))}
     </div>
@@ -72,13 +98,19 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
 function TrendingItem({
   show,
   isHovered,
+  isFocused,
+  isDimmed,
   onHover,
   onLeave,
+  onClick,
 }: {
   show: Show;
   isHovered: boolean;
+  isFocused: boolean;
+  isDimmed: boolean;
   onHover: () => void;
   onLeave: () => void;
+  onClick: () => void;
 }) {
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const bookmarked = isBookmarked(show.id);
@@ -129,14 +161,18 @@ function TrendingItem({
       )}
 
       <div
-        className={`group relative flex-shrink-0 w-[240px] md:w-[470px] rounded-lg overflow-hidden cursor-pointer transition-all duration-500 ${
-          isHovered
+        className={`group relative flex-shrink-0 w-[240px] md:w-[470px] rounded-lg overflow-hidden cursor-pointer transition-all duration-700 ease-out ${
+          isFocused
+            ? "scale-110 shadow-[0_0_40px_rgba(255,255,255,0.12)] brightness-110 z-10"
+            : isDimmed
+            ? "scale-95 opacity-40 brightness-75"
+            : isHovered
             ? "scale-105 shadow-[0_0_30px_rgba(255,255,255,0.08)] brightness-110"
             : "scale-100 shadow-none brightness-100"
         }`}
         onMouseEnter={onHover}
         onMouseLeave={onLeave}
-        onClick={() => setIsExpanded(true)}
+        onClick={onClick}
       >
         <div className="relative w-full aspect-[2/1]">
           {showVideo ? (
