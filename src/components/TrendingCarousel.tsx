@@ -98,13 +98,19 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
 function TrendingItem({
   show,
   isHovered,
+  isFocused,
+  isDimmed,
   onHover,
   onLeave,
+  onClick,
 }: {
   show: Show;
   isHovered: boolean;
+  isFocused: boolean;
+  isDimmed: boolean;
   onHover: () => void;
   onLeave: () => void;
+  onClick: () => void;
 }) {
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const bookmarked = isBookmarked(show.id);
