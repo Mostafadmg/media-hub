@@ -12,13 +12,14 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
   const [isPaused, setIsPaused] = useState(false);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const animationRef = useRef<number | null>(null);
-  const scrollSpeed = 0.8;
+  const scrollSpeed = 0.5;
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
   // Duplicate items for infinite scroll effect
   const items = [...shows, ...shows, ...shows];
 
   const animate = useCallback(() => {
-    if (!scrollRef.current || isPaused) {
+    if (!scrollRef.current || isPaused || focusedIndex !== null) {
       animationRef.current = requestAnimationFrame(animate);
       return;
     }
@@ -32,7 +33,28 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
     }
 
     animationRef.current = requestAnimationFrame(animate);
-  }, [isPaused]);
+  }, [isPaused, focusedIndex]);
+
+  const handleCardClick = useCallback((index: number) => {
+    if (focusedIndex === index) {
+      // Clicking focused card again — unfocus and resume
+      setFocusedIndex(null);
+      return;
+    }
+    setFocusedIndex(index);
+
+    // Smoothly scroll the clicked card to center
+    const container = scrollRef.current;
+    if (!container) return;
+    const card = container.children[index] as HTMLElement;
+    if (!card) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+    const scrollOffset = cardRect.left - containerRect.left - (containerRect.width / 2) + (cardRect.width / 2);
+
+    container.scrollBy({ left: scrollOffset, behavior: "smooth" });
+  }, [focusedIndex]);
 
   useEffect(() => {
     // Start from the middle set
