@@ -161,14 +161,18 @@ function TrendingItem({
       )}
 
       <div
-        className={`group relative flex-shrink-0 w-[240px] md:w-[470px] rounded-lg overflow-hidden cursor-pointer transition-all duration-500 ${
-          isHovered
+        className={`group relative flex-shrink-0 w-[240px] md:w-[470px] rounded-lg overflow-hidden cursor-pointer transition-all duration-700 ease-out ${
+          isFocused
+            ? "scale-110 shadow-[0_0_40px_rgba(255,255,255,0.12)] brightness-110 z-10"
+            : isDimmed
+            ? "scale-95 opacity-40 brightness-75"
+            : isHovered
             ? "scale-105 shadow-[0_0_30px_rgba(255,255,255,0.08)] brightness-110"
             : "scale-100 shadow-none brightness-100"
         }`}
         onMouseEnter={onHover}
         onMouseLeave={onLeave}
-        onClick={() => setIsExpanded(true)}
+        onClick={onClick}
       >
         <div className="relative w-full aspect-[2/1]">
           {showVideo ? (
