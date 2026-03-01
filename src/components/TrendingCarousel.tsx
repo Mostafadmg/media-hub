@@ -71,11 +71,12 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
   return (
     <div
       ref={scrollRef}
-      className="flex gap-4 md:gap-6 overflow-x-hidden py-3 px-1 -mx-1 scrollbar-hide"
+      className="flex gap-4 md:gap-6 overflow-x-hidden py-3 px-1 -mx-1 scrollbar-hide scroll-smooth"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => {
         setIsPaused(false);
         setHoveredId(null);
+        setFocusedIndex(null);
       }}
     >
       {items.map((show, i) => (
@@ -83,8 +84,11 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
           key={`${show.id}-${i}`}
           show={show}
           isHovered={hoveredId === `${show.id}-${i}`}
+          isFocused={focusedIndex === i}
+          isDimmed={focusedIndex !== null && focusedIndex !== i}
           onHover={() => setHoveredId(`${show.id}-${i}`)}
           onLeave={() => setHoveredId(null)}
+          onClick={() => handleCardClick(i)}
         />
       ))}
     </div>
