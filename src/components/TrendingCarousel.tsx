@@ -40,7 +40,7 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
     const el = scrollRef.current;
     if (!el) return;
 
-    const speed = 0.5; // pixels per frame at 60fps
+    const speed = 1.2; // pixels per frame at 60fps
 
     const animate = (time: number) => {
       if (!lastTimeRef.current) lastTimeRef.current = time;
