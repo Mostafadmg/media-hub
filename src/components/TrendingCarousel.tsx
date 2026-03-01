@@ -13,6 +13,8 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [isHoveringContainer, setIsHoveringContainer] = useState(false);
+  const animationRef = useRef<number>();
+  const lastTimeRef = useRef<number>(0);
 
   const checkScroll = useCallback(() => {
     const el = scrollRef.current;
@@ -32,6 +34,36 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
       window.removeEventListener("resize", checkScroll);
     };
   }, [checkScroll]);
+
+  // Auto-scroll logic
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const speed = 0.5; // pixels per frame at 60fps
+
+    const animate = (time: number) => {
+      if (!lastTimeRef.current) lastTimeRef.current = time;
+      const delta = time - lastTimeRef.current;
+      lastTimeRef.current = time;
+
+      if (!isHoveringContainer) {
+        el.scrollLeft += speed * (delta / 16.67);
+
+        // Loop back to start seamlessly
+        if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 1) {
+          el.scrollLeft = 0;
+        }
+      }
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, [isHoveringContainer]);
 
   const scroll = (direction: "left" | "right") => {
     const el = scrollRef.current;
