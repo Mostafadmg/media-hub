@@ -35,19 +35,23 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
     };
   }, [checkScroll]);
 
-  // Auto-scroll logic
+  // Auto-scroll logic — use a ref for hover state so effect doesn't re-mount
+  const hoveringRef = useRef(false);
+  hoveringRef.current = isHoveringContainer;
+
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
 
     const speed = 1.2; // pixels per frame at 60fps
+    let prevTime = 0;
 
     const animate = (time: number) => {
-      if (!lastTimeRef.current) lastTimeRef.current = time;
-      const delta = time - lastTimeRef.current;
-      lastTimeRef.current = time;
+      if (!prevTime) prevTime = time;
+      const delta = Math.min(time - prevTime, 50); // cap delta to avoid jumps
+      prevTime = time;
 
-      if (!isHoveringContainer) {
+      if (!hoveringRef.current) {
         el.scrollLeft += speed * (delta / 16.67);
 
         // Loop back to start seamlessly
@@ -63,7 +67,7 @@ export function TrendingCarousel({ shows }: TrendingCarouselProps) {
     return () => {
       if (animationRef.current) cancelAnimationFrame(animationRef.current);
     };
-  }, [isHoveringContainer]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scroll = (direction: "left" | "right") => {
     const el = scrollRef.current;
