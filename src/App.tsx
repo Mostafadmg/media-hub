@@ -5,11 +5,11 @@ import {
 } from "lucide-react";
 
 const lessons = [
-  { title: "Welcome & learning outcomes", time: "4 min", done: true },
-  { title: "A quick guide to POPs", time: "8 min", done: true },
-  { title: "Choosing the right pill", time: "12 min", done: false },
-  { title: "Safe prescribing scenarios", time: "15 min", done: false },
-  { title: "Knowledge check", time: "10 min", done: false },
+  { title: "Welcome & learning outcomes", time: "4 min", done: true, description: "Set the foundations for a confident, person-centred consultation." },
+  { title: "A quick guide to POPs", time: "8 min", done: true, description: "Review the essentials before moving into real-world prescribing decisions." },
+  { title: "Choosing the right pill", time: "12 min", done: false, description: "Match the method to the person in front of you. Explore the key differences and decision points." },
+  { title: "Safe prescribing scenarios", time: "15 min", done: false, description: "Work through practical scenarios that strengthen your prescribing confidence." },
+  { title: "Knowledge check", time: "10 min", done: false, description: "Consolidate your learning with a short, supportive knowledge check." },
 ];
 
 export default function App() {
@@ -18,6 +18,7 @@ export default function App() {
   const [complete, setComplete] = useState(false);
   const [playing, setPlaying] = useState(false);
   const progress = complete ? 60 : 40;
+  const currentLesson = lessons[activeLesson];
 
   return (
     <div className="academy">
@@ -104,8 +105,8 @@ export default function App() {
           </section>
 
           <section className="active-lesson">
-            <div className="lesson-number">03</div>
-            <div className="active-copy"><p className="kicker">UP NEXT · 12 MINUTES</p><h2>Choosing the right pill</h2><p>Match the method to the person in front of you. Explore the key differences and decision points.</p><div className="active-tags"><span><BookOpen size={15} /> 3 short chapters</span><span><Flame size={15} /> Case-based learning</span></div></div>
+            <div className="lesson-number">{String(activeLesson + 1).padStart(2, "0")}</div>
+            <div className="active-copy"><p className="kicker">SELECTED LESSON · {currentLesson.time.toUpperCase()}</p><h2>{currentLesson.title}</h2><p>{currentLesson.description}</p><div className="active-tags"><span><BookOpen size={15} /> 3 short chapters</span><span><Flame size={15} /> Case-based learning</span></div></div>
             <button className={`complete-button ${complete ? "is-complete" : ""}`} onClick={() => setComplete(!complete)}>{complete ? <><Check size={19} /> Completed</> : "Mark as complete"}</button>
           </section>
         </section>
