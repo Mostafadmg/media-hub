@@ -147,7 +147,7 @@ function TeachBlock({ block }: { block: Block }) {
         </table>
         <div className="table-cards">
           {block.rows.map((row) => (
-            <article className="table-card" key={row.join("-")}>
+            <article className={`table-card${block.headers.length <= 3 ? " compact" : ""}`} key={row.join("-")}>
               {block.headers.map((header, index) => (
                 <div key={`${header}-${index}`} className={index === 0 ? "lead" : ""}>
                   <span>{header}</span>

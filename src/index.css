@@ -246,7 +246,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   }
   .teach-list { padding-left: 20px; }
   .teach-list li { margin: 8px 0; }
-  .teach-cards, .fact-row, .pack-grid { grid-template-columns: 1fr; }
+  .teach-cards, .teach-cards.four, .fact-row, .pack-grid { grid-template-columns: 1fr; }
   .graphic-panel.decisions { grid-template-columns: 1fr 1fr; }
   .decision-orb { min-height: 0; padding: 14px; }
   .decision-orb b { margin-top: 10px; font-size: 16px; }
@@ -305,6 +305,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
     line-height: 1.4;
     overflow-wrap: break-word;
   }
+  .table-card.compact .lead { padding-bottom: 8px; }
+  .table-card.compact div:not(.lead) {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 6px 0;
+  }
+  .table-card.compact div:not(.lead) span { flex: none; }
+  .table-card.compact div:not(.lead) b { text-align: right; }
   footer {
     margin: 0 12px;
     padding: 16px 0 calc(24px + env(safe-area-inset-bottom, 0px));
