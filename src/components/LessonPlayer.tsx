@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Lightbulb, ListChecks, Scale, ShieldAlert } from "lucide-react";
 import type { Block, Lesson, PillTag } from "@/data/curriculum";
+import { ChcStartGuide } from "@/components/ChcStartGuide";
 
 const tagLabel: Record<PillTag, string> = {
   chc: "CHC",
@@ -126,6 +127,7 @@ function TeachBlock({ block }: { block: Block }) {
   if (block.kind === "p") return <p className="teach-copy">{block.text}</p>;
   if (block.kind === "src") return <p className="source-note">{block.text}</p>;
   if (block.kind === "graphic") return <Graphic variant={block.variant} />;
+  if (block.kind === "guide") return <ChcStartGuide />;
   if (block.kind === "cards") {
     return (
       <div className={`teach-cards ${block.items.length > 2 ? "four" : ""}`}>

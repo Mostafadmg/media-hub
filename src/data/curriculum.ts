@@ -14,6 +14,7 @@ export type Block =
   | { kind: "steps"; items: { title: string; text: string }[] }
   | { kind: "quiz"; question: string; options: string[]; answer: number; explain: string }
   | { kind: "graphic"; variant: "decisions" | "axis" | "windows" | "vte" | "packs" | "hfi" }
+  | { kind: "guide"; id: "chc-start" }
   | { kind: "src"; text: string };
 
 export type Section = {
@@ -385,11 +386,18 @@ export const lessons: Lesson[] = [
   },
   {
     title: "Pregnancy assessment and initiation",
-    time: "14 min",
+    time: "16 min",
     part: "ASSESSMENT",
     visual: "hfi",
-    description: "A negative test is a time-dependent result. Quick start prevents another unprotected interval.",
+    description: "When CHC can start, and when extra cover is needed. A negative test is a time-dependent result.",
     sections: [
+      {
+        title: "When CHC can start",
+        blocks: [
+          { kind: "guide", id: "chc-start" },
+          { kind: "p", text: "The same hormones sit in the pill, patch and ring. Extra cover means condoms used correctly, or no sex that could cause pregnancy. It does not mean withdrawal or calendar tracking." },
+        ],
+      },
       {
         title: "Reasonable certainty and quick start",
         blocks: [
