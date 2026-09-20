@@ -203,6 +203,7 @@ export function LessonPlayer({
   onComplete: () => void;
 }) {
   const last = lessonNumber === total;
+  const hasGuide = lesson.sections.some((section) => section.blocks.some((block) => block.kind === "guide"));
   return (
     <main className="reader">
       <div className="reader-bar">
@@ -214,12 +215,12 @@ export function LessonPlayer({
         <p>CHAPTER {String(lessonNumber).padStart(2, "0")} · {lesson.time.toUpperCase()}</p>
         <h1>{lesson.title}</h1>
         <p className="chapter-lede">{lesson.description}</p>
-        <div className="hero-graphic"><Graphic variant={lesson.visual as Extract<Block, { kind: "graphic" }>["variant"]} /></div>
+        {!hasGuide && <div className="hero-graphic"><Graphic variant={lesson.visual as Extract<Block, { kind: "graphic" }>["variant"]} /></div>}
       </header>
       <article className="chapter-body">
         {lesson.sections.map((section) => (
-          <section key={section.title} className="chapter-section">
-            <h2>{section.title}</h2>
+          <section key={section.title} className={`chapter-section${section.blocks[0]?.kind === "guide" ? " has-guide" : ""}`}>
+            {section.blocks[0]?.kind !== "guide" && <h2>{section.title}</h2>}
             {section.blocks.map((block, index) => <TeachBlock key={`${section.title}-${index}`} block={block} />)}
           </section>
         ))}
