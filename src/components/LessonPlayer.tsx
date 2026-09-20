@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, Lightbulb, ListChecks, Scale, ShieldAlert, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Lightbulb, ListChecks, Scale, ShieldAlert } from "lucide-react";
 import type { Block, Lesson, PillTag } from "@/data/curriculum";
 
 const tagLabel: Record<PillTag, string> = {
@@ -145,6 +145,18 @@ function TeachBlock({ block }: { block: Block }) {
           <thead><tr>{block.headers.map((header) => <th key={header}>{header}</th>)}</tr></thead>
           <tbody>{block.rows.map((row) => <tr key={row.join("-")}>{row.map((cell, index) => <td key={`${cell}-${index}`} className={index === 0 ? "k" : ""}>{cell}</td>)}</tr>)}</tbody>
         </table>
+        <div className="table-cards">
+          {block.rows.map((row) => (
+            <article className="table-card" key={row.join("-")}>
+              {block.headers.map((header, index) => (
+                <div key={`${header}-${index}`} className={index === 0 ? "lead" : ""}>
+                  <span>{header}</span>
+                  <b>{row[index]}</b>
+                </div>
+              ))}
+            </article>
+          ))}
+        </div>
       </div>
     );
   }
@@ -193,8 +205,8 @@ export function LessonPlayer({
     <main className="reader">
       <div className="reader-bar">
         <button className="back-button" onClick={onExit}><ArrowLeft size={17} /> Contents</button>
-        <span>{lesson.part}</span>
-        <button className="exit-button" onClick={onExit} aria-label="Close chapter"><X size={18} /></button>
+        <span className="reader-part">{lesson.part}</span>
+        <span className="reader-progress">{String(lessonNumber).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
       </div>
       <header className={`chapter-hero ${lesson.visual}`}>
         <p>CHAPTER {String(lessonNumber).padStart(2, "0")} · {lesson.time.toUpperCase()}</p>

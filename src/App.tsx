@@ -17,28 +17,37 @@ export default function App() {
     setCompletedLessons((previous) => previous.includes(index) ? previous : [...previous, index]);
   };
 
-  return (
-    <div className="academy">
-      <header className="topbar">
-        <a className="brand" href="#">
-          <span className="brand-mark"><HeartPulse size={19} /></span>
-          <span>clinica<span>academy</span></span>
-        </a>
-        <nav className="desktop-nav">
-          <a className="active" href="#learning">Manual</a>
-          <a href="#contents">Contents</a>
-          <a href="#support">Sources</a>
-        </nav>
-        <div className="profile-area">
-          <button className="icon-button" aria-label="Notifications"><Bell size={19} /></button>
-          <button className="avatar">EA</button>
-          <button className="menu-button" aria-label="Open navigation" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <X /> : <Menu />}
-          </button>
-        </div>
-      </header>
+  const closeMenu = () => setMenuOpen(false);
 
-      {menuOpen && <nav className="mobile-nav"><a href="#learning">Manual</a><a href="#contents">Contents</a><a href="#support">Sources</a></nav>}
+  return (
+    <div className={`academy${isLearning ? " learning" : ""}`}>
+      {!isLearning && (
+        <header className="topbar">
+          <a className="brand" href="#" onClick={closeMenu}>
+            <span className="brand-mark"><HeartPulse size={19} /></span>
+            <span>clinica<span>academy</span></span>
+          </a>
+          <nav className="desktop-nav">
+            <a className="active" href="#learning">Manual</a>
+            <a href="#contents">Contents</a>
+            <a href="#support">Sources</a>
+          </nav>
+          <div className="profile-area">
+            <button className="icon-button" aria-label="Notifications"><Bell size={19} /></button>
+            <button className="avatar">EA</button>
+            <button className="menu-button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} onClick={() => setMenuOpen(!menuOpen)}>
+              {menuOpen ? <X /> : <Menu />}
+            </button>
+          </div>
+          {menuOpen && (
+            <nav className="mobile-nav">
+              <a href="#learning" onClick={closeMenu}>Manual</a>
+              <a href="#contents" onClick={closeMenu}>Contents</a>
+              <a href="#support" onClick={closeMenu}>Sources</a>
+            </nav>
+          )}
+        </header>
+      )}
 
       {isLearning ? (
         <LessonPlayer
