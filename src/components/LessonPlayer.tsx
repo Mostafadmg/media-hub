@@ -200,7 +200,7 @@ export function LessonPlayer({
         <p>CHAPTER {String(lessonNumber).padStart(2, "0")} · {lesson.time.toUpperCase()}</p>
         <h1>{lesson.title}</h1>
         <p className="chapter-lede">{lesson.description}</p>
-        <Graphic variant={lesson.visual as Extract<Block, { kind: "graphic" }>["variant"]} />
+        <div className="hero-graphic"><Graphic variant={lesson.visual as Extract<Block, { kind: "graphic" }>["variant"]} /></div>
       </header>
       <article className="chapter-body">
         {lesson.sections.map((section) => (
