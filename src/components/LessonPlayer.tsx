@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Lightbulb, ListChecks, Scale, ShieldAlert, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Lightbulb, ListChecks, Scale, ShieldAlert, X } from "lucide-react";
 import type { Block, Lesson, PillTag } from "@/data/curriculum";
 
 const tagLabel: Record<PillTag, string> = {
-  trad: "Traditional",
+  chc: "CHC",
+  trad: "Traditional POP",
   dsg: "DSG",
   drsp: "DRSP",
-  all: "All POPs",
+  all: "All methods",
 };
 
 function Tag({ tone }: { tone: PillTag }) {
@@ -18,7 +19,7 @@ function Quiz({ block }: { block: Extract<Block, { kind: "quiz" }> }) {
   const answered = choice !== null;
   return (
     <section className="teach-quiz">
-      <p className="quiz-label">Check yourself</p>
+      <p className="quiz-label">Check your reasoning</p>
       <p className="quiz-question">{block.question}</p>
       <div className="quiz-options">
         {block.options.map((option, index) => {
@@ -37,54 +38,86 @@ function Quiz({ block }: { block: Extract<Block, { kind: "quiz" }> }) {
           );
         })}
       </div>
-      {answered && <p className="quiz-explain">{choice === block.answer ? "Correct. " : "Not quite. "}{block.explain}</p>}
+      {answered && <p className="quiz-explain">{choice === block.answer ? "Yes. " : "Not quite. "}{block.explain}</p>}
     </section>
   );
 }
 
-function Packs() {
-  return (
-    <div className="pack-grid">
-      <div className="pack-card trad">
-        <b>LNG 30 µg · 35 tablets</b>
-        <div className="blister">{Array.from({ length: 35 }, (_, i) => <i key={i} />)}</div>
-      </div>
-      <div className="pack-card trad">
-        <b>NET 350 µg · 28 tablets</b>
-        <div className="blister four">{Array.from({ length: 28 }, (_, i) => <i key={i} />)}</div>
-      </div>
-      <div className="pack-card dsg">
-        <b>DSG 75 µg · 28 tablets</b>
-        <div className="blister four">{Array.from({ length: 28 }, (_, i) => <i key={i} />)}</div>
-      </div>
-      <div className="pack-card drsp">
-        <b>DRSP 4 mg · 24 + 4</b>
-        <div className="blister four">
-          {Array.from({ length: 28 }, (_, i) => <i key={i} className={i >= 24 ? "placebo" : ""} />)}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Windows() {
-  return (
-    <div className="window-lanes">
-      {[
-        { tone: "trad" as const, name: "Traditional", late: 3, miss: 27, label: "Missed after 3 hours" },
-        { tone: "dsg" as const, name: "DSG", late: 12, miss: 36, label: "Missed after 12 hours" },
-        { tone: "drsp" as const, name: "DRSP", late: 24, miss: 48, label: "Missed after 24 hours" },
-      ].map((lane) => (
-        <div className="window-lane" key={lane.name}>
-          <div><Tag tone={lane.tone} /><strong>{lane.name}</strong><small>{lane.label}</small></div>
-          <div className="window-bar">
-            <i className="on-time" style={{ width: `${(24 / 48) * 100}%` }} />
-            <i className="late" style={{ left: `${(24 / 48) * 100}%`, width: `${(lane.late / 48) * 100}%` }} />
-            <i className="missed" style={{ left: `${((24 + lane.late) / 48) * 100}%`, width: `${((48 - 24 - lane.late) / 48) * 100}%` }} />
+function Graphic({ variant }: { variant: Extract<Block, { kind: "graphic" }>["variant"] }) {
+  if (variant === "decisions") {
+    return (
+      <div className="graphic-panel decisions">
+        {["Safety", "Effectiveness", "Pregnancy today", "Acceptability"].map((item, index) => (
+          <div key={item} className="decision-orb">
+            <em>0{index + 1}</em>
+            <b>{item}</b>
           </div>
-        </div>
-      ))}
-      <p className="window-key"><span className="on-time" /> On time <span className="late" /> Late but covered <span className="missed" /> Missed</p>
+        ))}
+      </div>
+    );
+  }
+  if (variant === "axis") {
+    return (
+      <div className="graphic-panel axis">
+        <div className="axis-node"><span>Brain</span><small>GnRH pulses</small></div>
+        <i />
+        <div className="axis-node"><span>Pituitary</span><small>FSH · LH</small></div>
+        <i />
+        <div className="axis-node"><span>Ovary</span><small>Estradiol · oocyte</small></div>
+        <i />
+        <div className="axis-node"><span>Uterus · cervix</span><small>Lining · mucus</small></div>
+      </div>
+    );
+  }
+  if (variant === "windows") {
+    return (
+      <div className="window-lanes">
+        {[
+          { tone: "trad" as const, name: "Traditional POP", label: "Missed after 3 hours" },
+          { tone: "dsg" as const, name: "Desogestrel", label: "Missed after 12 hours" },
+          { tone: "drsp" as const, name: "Drospirenone", label: "Missed after 24 hours" },
+          { tone: "chc" as const, name: "Standard EE COC", label: "Product-specific; often 24 hours" },
+        ].map((lane) => (
+          <div className="window-lane" key={lane.name}>
+            <div><Tag tone={lane.tone} /><strong>{lane.name}</strong><small>{lane.label}</small></div>
+            <div className={`window-bar ${lane.tone}`} />
+          </div>
+        ))}
+      </div>
+    );
+  }
+  if (variant === "vte") {
+    return (
+      <div className="vte-chart">
+        {[
+          { label: "No CHC", value: 2, max: 12 },
+          { label: "EE/LNG", value: 6, max: 12 },
+          { label: "EE/DSG or DRSP", value: 10, max: 12 },
+        ].map((row) => (
+          <div key={row.label}>
+            <span>{row.label}</span>
+            <b style={{ width: `${(row.value / row.max) * 100}%` }}>{row.value}</b>
+          </div>
+        ))}
+        <small>Estimated VTE events per 10,000 women per year</small>
+      </div>
+    );
+  }
+  if (variant === "packs") {
+    return (
+      <div className="pack-grid">
+        <div className="pack-card trad"><b>Traditional · continuous</b><div className="blister">{Array.from({ length: 28 }, (_, i) => <i key={i} />)}</div></div>
+        <div className="pack-card dsg"><b>DSG · all active</b><div className="blister">{Array.from({ length: 28 }, (_, i) => <i key={i} />)}</div></div>
+        <div className="pack-card drsp"><b>DRSP · 24 + 4</b><div className="blister">{Array.from({ length: 28 }, (_, i) => <i key={i} className={i >= 24 ? "placebo" : ""} />)}</div></div>
+        <div className="pack-card chc"><b>COC · 21 + 7 or 24 + 4</b><div className="blister">{Array.from({ length: 28 }, (_, i) => <i key={i} className={i >= 21 ? "placebo chc" : ""} />)}</div></div>
+      </div>
+    );
+  }
+  return (
+    <div className="hfi-graphic">
+      <div className="hfi-row"><span>21 active</span><em>7-day HFI</em></div>
+      <div className="hfi-row long"><span>63 active · tricycle</span><em>4-day HFI</em></div>
+      <div className="hfi-row continuous"><span>Continuous active tablets</span></div>
     </div>
   );
 }
@@ -92,14 +125,7 @@ function Windows() {
 function TeachBlock({ block }: { block: Block }) {
   if (block.kind === "p") return <p className="teach-copy">{block.text}</p>;
   if (block.kind === "src") return <p className="source-note">{block.text}</p>;
-  if (block.kind === "goals") {
-    return (
-      <div className="goal-box">
-        <b>By the end you can</b>
-        <ul>{block.items.map((item) => <li key={item}>{item}</li>)}</ul>
-      </div>
-    );
-  }
+  if (block.kind === "graphic") return <Graphic variant={block.variant} />;
   if (block.kind === "cards") {
     return (
       <div className={`teach-cards ${block.items.length > 2 ? "four" : ""}`}>
@@ -142,85 +168,55 @@ function TeachBlock({ block }: { block: Block }) {
       </ol>
     );
   }
-  if (block.kind === "legend") {
-    return (
-      <div className="legend">
-        <div><Tag tone="trad" /><span>Levonorgestrel 30 µg and norethisterone 350 µg. These two behave alike, so they share a colour.</span></div>
-        <div><Tag tone="dsg" /><span>Desogestrel 75 µg.</span></div>
-        <div><Tag tone="drsp" /><span>Drospirenone 4 mg. Whenever a rule differs by pill, it carries one of these tags.</span></div>
-        <div><Tag tone="all" /><span>The rule applies to every type.</span></div>
-      </div>
-    );
-  }
-  if (block.kind === "timeline") {
-    return (
-      <ol className="timeline">
-        {block.items.map((item) => (
-          <li key={item.year} className={item.tone ?? ""}>
-            <time>{item.year}</time>
-            <div><b>{item.title}</b><p>{item.text}</p></div>
-          </li>
-        ))}
-      </ol>
-    );
-  }
-  if (block.kind === "packs") return <Packs />;
-  if (block.kind === "windows") return <Windows />;
   return <Quiz block={block} />;
 }
 
 export function LessonPlayer({
   lesson,
   lessonNumber,
-  stepIndex,
-  onStep,
+  total,
   onExit,
-  onFinish,
+  onPrev,
+  onNext,
+  onComplete,
 }: {
   lesson: Lesson;
   lessonNumber: number;
-  stepIndex: number;
-  onStep: (index: number) => void;
+  total: number;
   onExit: () => void;
-  onFinish: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+  onComplete: () => void;
 }) {
-  const step = lesson.steps[stepIndex];
-  const last = stepIndex === lesson.steps.length - 1;
+  const last = lessonNumber === total;
   return (
-    <main className="player-shell">
-      <div className="player-top">
-        <button className="back-button" onClick={onExit}><ArrowLeft size={17} /> Back to course</button>
-        <span>CLINICA ACADEMY</span>
-        <button className="exit-button" onClick={onExit} aria-label="Exit lesson"><X size={18} /></button>
+    <main className="reader">
+      <div className="reader-bar">
+        <button className="back-button" onClick={onExit}><ArrowLeft size={17} /> Contents</button>
+        <span>{lesson.part}</span>
+        <button className="exit-button" onClick={onExit} aria-label="Close chapter"><X size={18} /></button>
       </div>
-      <div className="player-progress"><i style={{ width: `${((stepIndex + 1) / lesson.steps.length) * 100}%` }} /></div>
-      <div className="player-layout">
-        <aside className="chapter-rail">
-          <p>{lesson.part} · LESSON {String(lessonNumber).padStart(2, "0")}</p>
-          <h2>{lesson.title}</h2>
-          <div className="chapter-list">
-            {lesson.steps.map((item, index) => (
-              <button className={stepIndex === index ? "current" : stepIndex > index ? "read" : ""} key={item.title} onClick={() => onStep(index)}>
-                <span>{stepIndex > index ? <Check size={14} /> : String(index + 1).padStart(2, "0")}</span>
-                {item.title}
-              </button>
-            ))}
-          </div>
-        </aside>
-        <article className="learning-card teach-card-wide" key={`${lesson.title}-${step.title}`}>
-          <p className="kicker">STEP {stepIndex + 1} OF {lesson.steps.length}</p>
-          <h1>{step.title}</h1>
-          <p className="learning-lead">{step.lead}</p>
-          {step.blocks.map((block, index) => <TeachBlock key={`${step.title}-${index}`} block={block} />)}
-          <p className="source-note">Source: FSRH Progestogen-only Pills Guideline (August 2022; amended April 2026). Use local protocols and the current SmPC when making clinical decisions.</p>
-          <div className="player-actions">
-            <button className="previous-button" onClick={() => onStep(Math.max(0, stepIndex - 1))} disabled={stepIndex === 0}>Previous</button>
-            <button className="primary-button" onClick={() => last ? onFinish() : onStep(stepIndex + 1)}>
-              {last ? "Finish lesson" : "Continue"} <ArrowRight size={17} />
-            </button>
-          </div>
-        </article>
-      </div>
+      <header className={`chapter-hero ${lesson.visual}`}>
+        <p>CHAPTER {String(lessonNumber).padStart(2, "0")} · {lesson.time.toUpperCase()}</p>
+        <h1>{lesson.title}</h1>
+        <p className="chapter-lede">{lesson.description}</p>
+        <Graphic variant={lesson.visual as Extract<Block, { kind: "graphic" }>["variant"]} />
+      </header>
+      <article className="chapter-body">
+        {lesson.sections.map((section) => (
+          <section key={section.title} className="chapter-section">
+            <h2>{section.title}</h2>
+            {section.blocks.map((block, index) => <TeachBlock key={`${section.title}-${index}`} block={block} />)}
+          </section>
+        ))}
+        <p className="source-note">Educational summary of FSRH CHC (amended Oct 2023), FSRH POP (amended Apr 2026) and UKMEC 2025. Use local protocols and the current SmPC. This manual does not confer accreditation.</p>
+        <div className="chapter-nav">
+          <button className="previous-button" onClick={onPrev} disabled={lessonNumber === 1}>Previous chapter</button>
+          <button className="primary-button" onClick={() => { onComplete(); if (!last) onNext(); else onExit(); }}>
+            {last ? "Finish manual" : "Next chapter"} <ArrowRight size={17} />
+          </button>
+        </div>
+      </article>
     </main>
   );
 }
