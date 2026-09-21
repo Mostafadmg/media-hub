@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ArrowLeft, ArrowRight, Lightbulb, ListChecks, Scale, ShieldAlert } from "lucide-react";
 import type { Block, Lesson, PillTag } from "@/data/curriculum";
 import { ChcStartGuide } from "@/components/ChcStartGuide";
+import { TeachDeck } from "@/components/TeachBoard";
 
 const tagLabel: Record<PillTag, string> = {
   chc: "CHC",
@@ -218,6 +219,7 @@ export function LessonPlayer({
         {!hasGuide && <div className="hero-graphic"><Graphic variant={lesson.visual as Extract<Block, { kind: "graphic" }>["variant"]} /></div>}
       </header>
       <article className="chapter-body">
+        <TeachDeck lessonTitle={lesson.title} />
         {lesson.sections.map((section) => (
           <section key={section.title} className={`chapter-section${section.blocks[0]?.kind === "guide" ? " has-guide" : ""}`}>
             {section.blocks[0]?.kind !== "guide" && <h2>{section.title}</h2>}
