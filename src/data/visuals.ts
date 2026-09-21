@@ -26,19 +26,44 @@ export type TeachSlide = {
 };
 
 const I = {
-  cal: "/guide/icon-calendar-cycle.png",
-  uterus: "/guide/icon-uterus.png",
-  chc: "/guide/icon-chc-methods.png",
-  pop: "/guide/icon-pop-pack.png",
-  inj: "/guide/icon-injection.png",
-  implant: "/guide/icon-implant.png",
-  cu: "/guide/icon-copper-iud.png",
-  lng: "/guide/icon-lng-iud.png",
-  upa: "/guide/icon-upa-tablet.png",
-  white: "/guide/icon-white-tablet.png",
-  post: "/guide/icon-postpartum.png",
-  patch: "/guide/icon-patch.png",
-  ring: "/guide/icon-ring.png",
+  cal: "/lecture/lecture-preg-test.png",
+  uterus: "/lecture/lecture-lining.png",
+  lining: "/lecture/lecture-lining.png",
+  chc: "/lecture/lecture-chc-pack.png",
+  pop: "/lecture/lecture-pop-dsg.png",
+  inj: "/lecture/lecture-injection.png",
+  implant: "/lecture/lecture-implant.png",
+  cu: "/lecture/lecture-copper.png",
+  lng: "/lecture/lecture-lng.png",
+  upa: "/lecture/lecture-upa.png",
+  white: "/lecture/lecture-lng-tab.png",
+  post: "/lecture/lecture-newborn.png",
+  patch: "/lecture/lecture-patch-arm.png",
+  ring: "/lecture/lecture-ring-hand.png",
+  shield: "/lecture/lecture-shield.png",
+  target: "/lecture/lecture-target.png",
+  talk: "/lecture/lecture-talk.png",
+  brain: "/lecture/lecture-brain.png",
+  pituitary: "/lecture/lecture-pituitary.png",
+  ovary: "/lecture/lecture-ovary.png",
+  mucus: "/lecture/lecture-mucus.png",
+  vein: "/lecture/lecture-vein.png",
+  aura: "/lecture/lecture-aura.png",
+  clock3: "/lecture/lecture-clock3.png",
+  clock12: "/lecture/lecture-clock12.png",
+  clock24: "/lecture/lecture-clock24.png",
+  liver: "/lecture/lecture-liver.png",
+  notes: "/lecture/lecture-notes.png",
+  estrogen: "/lecture/lecture-estrogen.png",
+  packs: "/lecture/lecture-four-packs.png",
+  feeding: "/lecture/lecture-feeding.png",
+  books: "/lecture/lecture-books.png",
+  flag: "/lecture/lecture-flag.png",
+  stamp: "/lecture/lecture-stamp.png",
+  offlabel: "/lecture/lecture-offlabel.png",
+  limited: "/lecture/lecture-limited.png",
+  popTrad: "/lecture/lecture-pop-trad.png",
+  popDrsp: "/lecture/lecture-pop-drsp.png",
 };
 
 export const slides: Record<string, TeachSlide> = {
@@ -49,10 +74,10 @@ export const slides: Record<string, TeachSlide> = {
     lede: "A prescription is the end of several assessments. None of these questions answers all of the others.",
     takeaway: "Safe, effective, covering today’s pregnancy risk, and acceptable enough to use — check each one.",
     cards: [
-      { letter: "A", title: "Safety", subtitle: "Can this person use this hormonal method without an unacceptable health risk?", icon: I.uterus, tone: "mint", points: ["UKMEC answers this question", "It is not a brand recommendation"] },
-      { letter: "B", title: "Effectiveness", subtitle: "Will it work given medicines, absorption, adherence and circumstances?", icon: I.pop, tone: "sky", points: ["Enzyme induction can make a “safe” POP a poor contraceptive", "A late pack start can fail a medically suitable COC"] },
+      { letter: "A", title: "Safety", subtitle: "Can this person use this hormonal method without an unacceptable health risk?", icon: I.shield, tone: "mint", points: ["UKMEC answers this question", "It is not a brand recommendation"] },
+      { letter: "B", title: "Effectiveness", subtitle: "Will it work given medicines, absorption, adherence and circumstances?", icon: I.target, tone: "sky", points: ["Enzyme induction can make a “safe” POP a poor contraceptive", "A late pack start can fail a medically suitable COC"] },
       { letter: "C", title: "Pregnancy today", subtitle: "Is there already a possible pregnancy, a need for EC, or a gap before the new method works?", icon: I.cal, tone: "peach", points: ["A negative test is time-dependent", "Quick start still needs a follow-up test after UPSI"] },
-      { letter: "D", title: "Acceptability", subtitle: "Does it fit their priorities well enough that they are likely to use it?", icon: I.chc, tone: "lilac", points: ["Bleeding pattern, privacy, daily memory", "An effective method can still be the wrong choice"] },
+      { letter: "D", title: "Acceptability", subtitle: "Does it fit their priorities well enough that they are likely to use it?", icon: I.talk, tone: "lilac", points: ["Bleeding pattern, privacy, daily memory", "An effective method can still be the wrong choice"] },
     ],
   },
   "recommendation-types": {
@@ -62,9 +87,9 @@ export const slides: Record<string, TeachSlide> = {
     lede: "This distinction matters for consent, documentation and how you present an expected benefit.",
     takeaway: "Say whether something is established guidance, off-label but guideline-supported, or limited-evidence practice.",
     cards: [
-      { letter: "A", title: "Established guidance", tone: "mint", subtitle: "Supported by the relevant guideline or product instructions.", points: ["Missed-pill algorithms", "UKMEC categories", "Product-specific start rules"] },
-      { letter: "B", title: "Guideline-supported off-label", tone: "sky", subtitle: "A recognised approach that differs from the licence.", points: ["Tailored monophasic 21/7 CHC regimens", "Some EC timing and restart sequences"] },
-      { letter: "C", title: "Limited-evidence practice", tone: "peach", subtitle: "Tried clinically, but not a reliable universal sequence.", points: ["Doubling DSG to 150 µg for bleeding", "Do not present this as a licensed regimen"] },
+      { letter: "A", title: "Established guidance", icon: I.stamp, tone: "mint", subtitle: "Supported by the relevant guideline or product instructions.", points: ["Missed-pill algorithms", "UKMEC categories", "Product-specific start rules"] },
+      { letter: "B", title: "Guideline-supported off-label", icon: I.offlabel, tone: "sky", subtitle: "A recognised approach that differs from the licence.", points: ["Tailored monophasic 21/7 CHC regimens", "Some EC timing and restart sequences"] },
+      { letter: "C", title: "Limited-evidence practice", icon: I.limited, tone: "peach", subtitle: "Tried clinically, but not a reliable universal sequence.", points: ["Doubling DSG to 150 µg for bleeding", "Do not present this as a licensed regimen"] },
     ],
   },
   "bleeding-events": {
@@ -74,9 +99,9 @@ export const slides: Record<string, TeachSlide> = {
     lede: "The same word “period” can mean four different things. Teach the cause, then what it tells you.",
     takeaway: "A CHC withdrawal bleed does not prove ovulation and is not medically required.",
     cards: [
-      { letter: "A", title: "Physiological menstruation", icon: I.cal, tone: "peach", subtitle: "Steroid withdrawal after the corpus luteum regresses.", points: ["Usually follows an ovulatory cycle", "Abnormal or anovulatory bleeding also occurs"] },
+      { letter: "A", title: "Physiological menstruation", icon: I.ovary, tone: "peach", subtitle: "Steroid withdrawal after the corpus luteum regresses.", points: ["Usually follows an ovulatory cycle", "Abnormal or anovulatory bleeding also occurs"] },
       { letter: "B", title: "CHC withdrawal bleed", icon: I.chc, tone: "mint", subtitle: "Planned withdrawal of exogenous hormones.", points: ["Does not prove natural ovulation", "Not required for endometrial “cleansing”"] },
-      { letter: "C", title: "Breakthrough bleeding", icon: I.uterus, tone: "lilac", subtitle: "Endometrial instability during active hormones, or another cause.", points: ["Not a reliable measure of efficacy", "Needs contextual assessment"] },
+      { letter: "C", title: "Breakthrough bleeding", icon: I.lining, tone: "lilac", subtitle: "Endometrial instability during active hormones, or another cause.", points: ["Not a reliable measure of efficacy", "Needs contextual assessment"] },
       { letter: "D", title: "Amenorrhoea on hormones", icon: I.uterus, tone: "sky", subtitle: "Limited proliferation and/or altered ovarian activity.", points: ["Often expected", "Does not mean retained blood is building up"] },
     ],
   },
@@ -88,9 +113,9 @@ export const slides: Record<string, TeachSlide> = {
     legend: true,
     takeaway: "Traditional POP is mucus-led and 3 hours late. DSG is 12 hours. DRSP active tablets are 24 hours, then 7 days to recover.",
     cards: [
-      { letter: "A", title: "Traditional POP", icon: I.pop, tone: "peach", subtitle: "NET 350 µg or LNG 30 µg. Mucus is the principal action.", rows: [{ label: "Lateness window", chip: "3 hours", tone: "seven" }, { label: "Backup after a miss", chip: "48 hours", tone: "seven" }] },
+      { letter: "A", title: "Traditional POP", icon: I.popTrad, tone: "peach", subtitle: "NET 350 µg or LNG 30 µg. Mucus is the principal action.", rows: [{ label: "Lateness window", chip: "3 hours", tone: "seven" }, { label: "Backup after a miss", chip: "48 hours", tone: "seven" }] },
       { letter: "B", title: "Desogestrel POP", icon: I.pop, tone: "sky", subtitle: "75 µg. Ovulation inhibition is much more consistent.", rows: [{ label: "Lateness window", chip: "12 hours", tone: "none" }, { label: "Backup after a miss", chip: "48 hours", tone: "seven" }] },
-      { letter: "C", title: "Drospirenone POP", icon: I.pop, tone: "mint", subtitle: "Slynd 4 mg. 24 active + 4 placebo. Watch potassium.", rows: [{ label: "Lateness window", chip: "24 hours", tone: "none" }, { label: "Backup after a miss", chip: "7 active days", tone: "seven" }] },
+      { letter: "C", title: "Drospirenone POP", icon: I.popDrsp, tone: "mint", subtitle: "Slynd 4 mg. 24 active + 4 placebo. Watch potassium.", rows: [{ label: "Lateness window", chip: "24 hours", tone: "none" }, { label: "Backup after a miss", chip: "7 active days", tone: "seven" }] },
       { letter: "D", title: "CHC / COC", icon: I.chc, tone: "lilac", subtitle: "Estrogen plus progestogen. Principal action: ovulation suppression.", rows: [{ label: "Standard EE miss", chip: "Often 24 hours", tone: "seven" }, { label: "Backup after ≥48 h lapse", chip: "7 active days", tone: "seven" }] },
     ],
   },
@@ -101,9 +126,9 @@ export const slides: Record<string, TeachSlide> = {
     lede: "Milligrams of estradiol valerate cannot be compared with micrograms of ethinylestradiol. “Bio-identical” does not remove CHC contraindications.",
     takeaway: "Choose by the whole product and the patient, not by generation or the word natural.",
     cards: [
-      { letter: "A", title: "Ethinylestradiol", tone: "peach", subtitle: "Most established COCs. Potent oral estrogen with important hepatic effects.", points: ["20 µg may reduce estrogen symptoms but can give more spotting than 30 µg", "EE/LNG or EE/NET is a reasonable first CHC"] },
-      { letter: "B", title: "Estradiol-based", tone: "sky", subtitle: "Qlaira (E2V), Zoely (E2), Drovelis (E4).", points: ["Phase-specific instructions matter", "Different biomarkers do not prove lower clinical VTE risk"] },
-      { letter: "C", title: "Generation trap", tone: "lilac", subtitle: "Generations are historical labels, not a safety ladder.", points: ["Norgestimate VTE risk sits with LNG/NET, not automatically with DSG", "Do not transfer EE/DSG VTE estimates to the DSG-only pill"] },
+      { letter: "A", title: "Ethinylestradiol", icon: I.estrogen, tone: "peach", subtitle: "Most established COCs. Potent oral estrogen with important hepatic effects.", points: ["20 µg may reduce estrogen symptoms but can give more spotting than 30 µg", "EE/LNG or EE/NET is a reasonable first CHC"] },
+      { letter: "B", title: "Estradiol-based", icon: I.chc, tone: "sky", subtitle: "Qlaira (E2V), Zoely (E2), Drovelis (E4).", points: ["Phase-specific instructions matter", "Different biomarkers do not prove lower clinical VTE risk"] },
+      { letter: "C", title: "Generation trap", icon: I.limited, tone: "lilac", subtitle: "Generations are historical labels, not a safety ladder.", points: ["Norgestimate VTE risk sits with LNG/NET, not automatically with DSG", "Do not transfer EE/DSG VTE estimates to the DSG-only pill"] },
     ],
   },
   "vte-talk": {
@@ -113,9 +138,9 @@ export const slides: Record<string, TeachSlide> = {
     lede: "Per 10,000 women per year. These are not personalised estimates for someone with multiple major risk factors.",
     takeaway: "A change from about 6 to about 10 per 10,000 is four extra cases per 10,000 users per year — more useful than saying only “higher”.",
     cards: [
-      { letter: "A", title: "No CHC, not pregnant", tone: "mint", subtitle: "About 2 events per 10,000 per year.", points: ["Baseline, not zero", "Pregnancy itself has a higher VTE risk"] },
-      { letter: "B", title: "EE + LNG, NET or norgestimate", tone: "sky", subtitle: "About 5–7 per 10,000 per year.", points: ["Reasonable first combined option when eligible", "Still CHC — contraindications remain"] },
-      { letter: "C", title: "EE + DSG, gestodene or DRSP", tone: "peach", subtitle: "About 9–12 per 10,000 per year.", points: ["The extra risk is small in absolute terms for a low-baseline patient", "Do not ignore it in someone with additional VTE factors"] },
+      { letter: "A", title: "No CHC, not pregnant", icon: I.shield, tone: "mint", subtitle: "About 2 events per 10,000 per year.", points: ["Baseline, not zero", "Pregnancy itself has a higher VTE risk"] },
+      { letter: "B", title: "EE + LNG, NET or norgestimate", icon: I.chc, tone: "sky", subtitle: "About 5–7 per 10,000 per year.", points: ["Reasonable first combined option when eligible", "Still CHC — contraindications remain"] },
+      { letter: "C", title: "EE + DSG, gestodene or DRSP", icon: I.vein, tone: "peach", subtitle: "About 9–12 per 10,000 per year.", points: ["The extra risk is small in absolute terms for a low-baseline patient", "Do not ignore it in someone with additional VTE factors"] },
     ],
   },
   "say-the-risk": {
@@ -273,9 +298,9 @@ export const slides: Record<string, TeachSlide> = {
     legend: true,
     takeaway: "Traditional POP: more than 3 hours late. DSG: 12. DRSP active: 24. Then use that method’s recovery rule, not another pill’s.",
     cards: [
-      { letter: "A", title: "Traditional POP", icon: I.pop, tone: "peach", rows: [{ label: "Missed if more than", chip: "3 hours late", tone: "wait" }, { label: "Since last correct dose", chip: "> 27 hours", tone: "seven" }, { label: "Then", chip: "48 hours backup", tone: "seven" }] },
-      { letter: "B", title: "DSG POP", icon: I.pop, tone: "sky", rows: [{ label: "Missed if more than", chip: "12 hours late", tone: "seven" }, { label: "Since last correct dose", chip: "> 36 hours", tone: "seven" }, { label: "Then", chip: "48 hours backup", tone: "seven" }] },
-      { letter: "C", title: "DRSP POP", icon: I.pop, tone: "mint", rows: [{ label: "Missed active tablet", chip: "24 hours late", tone: "none" }, { label: "Then", chip: "7 active days", tone: "seven" }, { label: "Days 18–24 miss", chip: "Skip placebos", tone: "wait" }] },
+      { letter: "A", title: "Traditional POP", icon: I.clock3, tone: "peach", rows: [{ label: "Missed if more than", chip: "3 hours late", tone: "wait" }, { label: "Since last correct dose", chip: "> 27 hours", tone: "seven" }, { label: "Then", chip: "48 hours backup", tone: "seven" }] },
+      { letter: "B", title: "DSG POP", icon: I.clock12, tone: "sky", rows: [{ label: "Missed if more than", chip: "12 hours late", tone: "seven" }, { label: "Since last correct dose", chip: "> 36 hours", tone: "seven" }, { label: "Then", chip: "48 hours backup", tone: "seven" }] },
+      { letter: "C", title: "DRSP POP", icon: I.clock24, tone: "mint", rows: [{ label: "Missed active tablet", chip: "24 hours late", tone: "none" }, { label: "Then", chip: "7 active days", tone: "seven" }, { label: "Days 18–24 miss", chip: "Skip placebos", tone: "wait" }] },
     ],
   },
   "switch-questions": {
@@ -297,10 +322,10 @@ export const slides: Record<string, TeachSlide> = {
     lede: "Do not give the same advice for every “interaction”. The mechanism decides the plan.",
     takeaway: "Enzyme induction needs an unaffected method. Lamotrigine is often the contraceptive changing the other drug. Most ordinary antibiotics do not.",
     cards: [
-      { letter: "A", title: "Enzyme induction", tone: "peach", subtitle: "Rifampicin, carbamazepine, St John’s wort and others.", points: ["Offer copper IUD, LNG-IUD or DMPA where suitable", "Precautions often continue 28 days after stopping"] },
-      { letter: "B", title: "Lamotrigine", tone: "lilac", subtitle: "Estrogen can lower lamotrigine.", points: ["Starting or stopping CHC needs specialist coordination", "An HFI can raise lamotrigine again"] },
-      { letter: "C", title: "Antibiotics", tone: "mint", subtitle: "Most non-inducing antibiotics do not need extra contraception.", points: ["Ask: is it rifampicin? Is there vomiting or diarrhoea?", "Has illness disrupted adherence?"] },
-      { letter: "D", title: "Tirzepatide", tone: "sky", subtitle: "Absorption around initiation and dose increases.", points: ["Non-oral method, or barrier for 4 weeks after starting", "And 4 weeks after each dose increase"] },
+      { letter: "A", title: "Enzyme induction", icon: I.liver, tone: "peach", subtitle: "Rifampicin, carbamazepine, St John’s wort and others.", points: ["Offer copper IUD, LNG-IUD or DMPA where suitable", "Precautions often continue 28 days after stopping"] },
+      { letter: "B", title: "Lamotrigine", icon: I.estrogen, tone: "lilac", subtitle: "Estrogen can lower lamotrigine.", points: ["Starting or stopping CHC needs specialist coordination", "An HFI can raise lamotrigine again"] },
+      { letter: "C", title: "Antibiotics", icon: I.stamp, tone: "mint", subtitle: "Most non-inducing antibiotics do not need extra contraception.", points: ["Ask: is it rifampicin? Is there vomiting or diarrhoea?", "Has illness disrupted adherence?"] },
+      { letter: "D", title: "Tirzepatide", icon: I.inj, tone: "sky", subtitle: "Absorption around initiation and dose increases.", points: ["Non-oral method, or barrier for 4 weeks after starting", "And 4 weeks after each dose increase"] },
     ],
   },
   "ec-options": {
@@ -394,8 +419,8 @@ export const slides: Record<string, TeachSlide> = {
     lede: "Check the live guideline and the dispensed product’s SmPC. This page is teaching, not a protocol.",
     takeaway: "UKMEC 2025 is the UK eligibility edition. A 2026 amendment date does not create a “UKMEC 2026”.",
     cards: [
-      { letter: "A", title: "Core", tone: "mint", points: ["FSRH CHC, amended Oct 2023", "FSRH POP, amended Apr 2026", "UKMEC 2025"] },
-      { letter: "B", title: "Also in the room", tone: "sky", points: ["FSRH EC, amended Apr 2026", "Current SmPC for the brand in the box", "BNF at the point of prescribing"] },
+      { letter: "A", title: "Core", icon: I.books, tone: "mint", points: ["FSRH CHC, amended Oct 2023", "FSRH POP, amended Apr 2026", "UKMEC 2025"] },
+      { letter: "B", title: "Also in the room", icon: I.notes, tone: "sky", points: ["FSRH EC, amended Apr 2026", "Current SmPC for the brand in the box", "BNF at the point of prescribing"] },
     ],
   },
   "axis-map": {
@@ -405,10 +430,10 @@ export const slides: Record<string, TeachSlide> = {
     lede: "Hormonal contraception works by changing this axis. Teach the chain, then the bleed.",
     takeaway: "Reduce gonadotrophin drive and you change both the ovary and the endometrium.",
     cards: [
-      { letter: "A", title: "Brain", tone: "peach", subtitle: "GnRH pulses set the pace.", icon: I.cal, points: ["Pulse frequency matters", "This is upstream of the pill’s main effect"] },
-      { letter: "B", title: "Pituitary", tone: "sky", subtitle: "FSH and LH.", icon: I.chc, points: ["FSH supports follicular recruitment", "LH is needed for the ovulatory surge"] },
-      { letter: "C", title: "Ovary", tone: "mint", subtitle: "Estradiol and the oocyte.", icon: I.uterus, points: ["Theca androgens, granulosa aromatase", "Less gonadotrophin drive can mean less ovarian androgen"] },
-      { letter: "D", title: "Uterus and cervix", tone: "lilac", subtitle: "Lining and mucus.", icon: I.pop, points: ["Mucus can block sperm even if ovulation is not fully suppressed", "A withdrawal bleed is not a natural period"] },
+      { letter: "A", title: "Brain", tone: "peach", subtitle: "GnRH pulses set the pace.", icon: I.brain, points: ["Pulse frequency matters", "This is upstream of the pill’s main effect"] },
+      { letter: "B", title: "Pituitary", tone: "sky", subtitle: "FSH and LH.", icon: I.pituitary, points: ["FSH supports follicular recruitment", "LH is needed for the ovulatory surge"] },
+      { letter: "C", title: "Ovary", tone: "mint", subtitle: "Estradiol and the oocyte.", icon: I.ovary, points: ["Theca androgens, granulosa aromatase", "Less gonadotrophin drive can mean less ovarian androgen"] },
+      { letter: "D", title: "Uterus and cervix", tone: "lilac", subtitle: "Lining and mucus.", icon: I.mucus, points: ["Mucus can block sperm even if ovulation is not fully suppressed", "A withdrawal bleed is not a natural period"] },
     ],
   },
   "mucus-vs-ovulation": {
@@ -418,8 +443,8 @@ export const slides: Record<string, TeachSlide> = {
     lede: "The lateness window follows the main mechanism. Do not copy a CHC missed-pill story onto a traditional POP.",
     takeaway: "Traditional POP is mucus-led. DSG, DRSP and CHC rely much more on stopping ovulation.",
     cards: [
-      { letter: "A", title: "Traditional POP", icon: I.pop, tone: "peach", subtitle: "Mucus is the principal action.", points: ["Ovulation is not reliably stopped", "3-hour window because mucus needs recent hormone"] },
-      { letter: "B", title: "DSG / DRSP / CHC", icon: I.chc, tone: "mint", subtitle: "Ovulation inhibition is the main story.", points: ["DSG 12 hours, DRSP active 24 hours", "Standard EE CHC recovery is usually 7 active days"] },
+      { letter: "A", title: "Traditional POP", icon: I.mucus, tone: "peach", subtitle: "Mucus is the principal action.", points: ["Ovulation is not reliably stopped", "3-hour window because mucus needs recent hormone"] },
+      { letter: "B", title: "DSG / DRSP / CHC", icon: I.ovary, tone: "mint", subtitle: "Ovulation inhibition is the main story.", points: ["DSG 12 hours, DRSP active 24 hours", "Standard EE CHC recovery is usually 7 active days"] },
     ],
   },
   "first-chc": {
@@ -453,10 +478,10 @@ export const slides: Record<string, TeachSlide> = {
     legend: true,
     takeaway: "Aura, current breast cancer, and breastfeeding under 6 weeks are not “try a lower dose”.",
     cards: [
-      { letter: "A", title: "Migraine with aura", icon: I.uterus, tone: "lilac", rows: [{ label: "CHC", chip: "UKMEC 4", tone: "wait" }, { label: "Typical action", chip: "Do not use estrogen", tone: "wait" }] },
-      { letter: "B", title: "Breastfeeding under 6 weeks", icon: I.post, tone: "peach", rows: [{ label: "CHC", chip: "UKMEC 4", tone: "wait" }, { label: "POP", chip: "Usually usable", tone: "none" }] },
-      { letter: "C", title: "Current breast cancer", icon: I.white, tone: "sky", rows: [{ label: "Hormonal methods", chip: "Generally 4", tone: "wait" }, { label: "Often discuss", chip: "Copper IUD", tone: "none" }] },
-      { letter: "D", title: "BMI 35 or above", icon: I.chc, tone: "mint", rows: [{ label: "CHC", chip: "UKMEC 3", tone: "seven" }, { label: "Action", chip: "Usually another method", tone: "seven" }] },
+      { letter: "A", title: "Migraine with aura", icon: I.aura, tone: "lilac", rows: [{ label: "CHC", chip: "UKMEC 4", tone: "wait" }, { label: "Typical action", chip: "Do not use estrogen", tone: "wait" }] },
+      { letter: "B", title: "Breastfeeding under 6 weeks", icon: I.feeding, tone: "peach", rows: [{ label: "CHC", chip: "UKMEC 4", tone: "wait" }, { label: "POP", chip: "Usually usable", tone: "none" }] },
+      { letter: "C", title: "Current breast cancer", icon: I.flag, tone: "sky", rows: [{ label: "Hormonal methods", chip: "Generally 4", tone: "wait" }, { label: "Often discuss", chip: "Copper IUD", tone: "none" }] },
+      { letter: "D", title: "BMI 35 or above", icon: I.vein, tone: "mint", rows: [{ label: "CHC", chip: "UKMEC 3", tone: "seven" }, { label: "Action", chip: "Usually another method", tone: "seven" }] },
     ],
   },
   "start-scratch": {
@@ -497,8 +522,8 @@ export const slides: Record<string, TeachSlide> = {
     legend: true,
     takeaway: "Breastfeeding under 6 weeks postpartum is UKMEC 4 for CHC. Do not start.",
     cards: [
-      { letter: "A", title: "CHC while feeding", icon: I.chc, tone: "peach", rows: [{ label: "Under 6 weeks", chip: "UKMEC 4", tone: "wait" }, { label: "6 weeks to 6 months", chip: "Usually 2", tone: "seven" }] },
-      { letter: "B", title: "POP while feeding", icon: I.pop, tone: "mint", rows: [{ label: "Traditional / DSG", chip: "Generally usable", tone: "none" }, { label: "LAM", chip: "Strict criteria only", tone: "seven" }] },
+      { letter: "A", title: "CHC while feeding", icon: I.feeding, tone: "peach", rows: [{ label: "Under 6 weeks", chip: "UKMEC 4", tone: "wait" }, { label: "6 weeks to 6 months", chip: "Usually 2", tone: "seven" }] },
+      { letter: "B", title: "POP while feeding", icon: I.popTrad, tone: "mint", rows: [{ label: "Traditional / DSG", chip: "Generally usable", tone: "none" }, { label: "LAM", chip: "Strict criteria only", tone: "seven" }] },
     ],
   },
   "pop-no-break": {
@@ -576,8 +601,8 @@ export const slides: Record<string, TeachSlide> = {
     lede: "A brand change is not the response to a possible clot, new aura, or a breast lump.",
     takeaway: "Calf pain, chest pain, new migraine or a new UKMEC 3/4 diagnosis needs review — not a different packet.",
     cards: [
-      { letter: "A", title: "Seek urgent review", icon: I.white, tone: "peach", points: ["Calf pain, chest pain or haemoptysis", "New migraine or neurological symptoms", "A new UKMEC 3 or 4 diagnosis"] },
-      { letter: "B", title: "Then the consultation", icon: I.cal, tone: "mint", points: ["Diagnose before switching brand", "Support early nuisance symptoms if they are acceptable", "Plan a review date if you do change formulation"] },
+      { letter: "A", title: "Seek urgent review", icon: I.flag, tone: "peach", points: ["Calf pain, chest pain or haemoptysis", "New migraine or neurological symptoms", "A new UKMEC 3 or 4 diagnosis"] },
+      { letter: "B", title: "Then the consultation", icon: I.talk, tone: "mint", points: ["Diagnose before switching brand", "Support early nuisance symptoms if they are acceptable", "Plan a review date if you do change formulation"] },
     ],
   },
   "age-fifty": {
@@ -598,9 +623,9 @@ export const slides: Record<string, TeachSlide> = {
     lede: "The teaching point is the class of error, not the brand you would have preferred.",
     takeaway: "A safety contraindication beats cycle-control. Dose reduction cannot convert UKMEC 4 into an acceptable method.",
     cards: [
-      { letter: "A", title: "Aura on CHC", tone: "lilac", points: ["Stop estrogen", "Category 4 is not “use 20 µg instead”"] },
-      { letter: "B", title: "Age, smoking, acne", tone: "peach", points: ["Acne benefit does not cancel CHC arterial risk", "Offer an estrogen-free option"] },
-      { letter: "C", title: "Rifampicin", tone: "sky", points: ["This is enzyme induction", "A vaginal ring is still CHC"] },
+      { letter: "A", title: "Aura on CHC", icon: I.aura, tone: "lilac", points: ["Stop estrogen", "Category 4 is not “use 20 µg instead”"] },
+      { letter: "B", title: "Age, smoking, acne", icon: I.vein, tone: "peach", points: ["Acne benefit does not cancel CHC arterial risk", "Offer an estrogen-free option"] },
+      { letter: "C", title: "Rifampicin", icon: I.liver, tone: "sky", points: ["This is enzyme induction", "A vaginal ring is still CHC"] },
     ],
   },
   "not-ukmec-2026": {

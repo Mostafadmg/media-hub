@@ -166,7 +166,7 @@ export function TeachDeck({ lessonTitle }: { lessonTitle: string }) {
   if (!items.length) return null;
   return (
     <section className="teach-deck">
-      <p className="deck-kicker">Visual teaching · same clinical rules, illustrated</p>
+      <p className="deck-kicker">Lecture boards · tap a card · unique to this chapter</p>
       {items.map((slide, index) => (
         <TeachBoard key={slide.id} slide={slide} index={index + 1} total={items.length} />
       ))}

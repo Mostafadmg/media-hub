@@ -3,6 +3,8 @@ import { ArrowLeft, ArrowRight, Lightbulb, ListChecks, Scale, ShieldAlert } from
 import type { Block, Lesson, PillTag } from "@/data/curriculum";
 import { ChcStartGuide } from "@/components/ChcStartGuide";
 import { TeachDeck } from "@/components/TeachBoard";
+import { LectureHero } from "@/components/LectureDiagrams";
+import { lessonLectures } from "@/data/lectures";
 
 const tagLabel: Record<PillTag, string> = {
   chc: "CHC",
@@ -204,7 +206,7 @@ export function LessonPlayer({
   onComplete: () => void;
 }) {
   const last = lessonNumber === total;
-  const hasGuide = lesson.sections.some((section) => section.blocks.some((block) => block.kind === "guide"));
+  const lecture = lessonLectures[lesson.title];
   return (
     <main className="reader">
       <div className="reader-bar">
@@ -216,7 +218,11 @@ export function LessonPlayer({
         <p>CHAPTER {String(lessonNumber).padStart(2, "0")} · {lesson.time.toUpperCase()}</p>
         <h1>{lesson.title}</h1>
         <p className="chapter-lede">{lesson.description}</p>
-        {!hasGuide && <div className="hero-graphic"><Graphic variant={lesson.visual as Extract<Block, { kind: "graphic" }>["variant"]} /></div>}
+        {lecture ? (
+          <LectureHero scene={lecture.scene} diagram={lecture.diagram} title={lesson.title} />
+        ) : (
+          <div className="hero-graphic"><Graphic variant={lesson.visual as Extract<Block, { kind: "graphic" }>["variant"]} /></div>
+        )}
       </header>
       <article className="chapter-body">
         <TeachDeck lessonTitle={lesson.title} />

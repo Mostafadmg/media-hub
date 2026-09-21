@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { lessons } from "@/data/curriculum";
+import { lessonLectures } from "@/data/lectures";
 import { lessonBoards, slides } from "@/data/visuals";
 
 describe("visual teaching boards", () => {
@@ -18,5 +19,12 @@ describe("visual teaching boards", () => {
       expect(slide.takeaway.length).toBeGreaterThan(20);
       expect(slide.cards.length).toBeGreaterThanOrEqual(2);
     }
+  });
+
+  it("gives every lesson a unique lecture scene and animated diagram", () => {
+    const missing = lessons.filter((lesson) => !lessonLectures[lesson.title]).map((lesson) => lesson.title);
+    expect(missing).toEqual([]);
+    const scenes = lessons.map((lesson) => lessonLectures[lesson.title].scene);
+    expect(new Set(scenes).size).toBe(lessons.length);
   });
 });
